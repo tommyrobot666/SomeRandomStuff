@@ -1,2 +1,4 @@
-package net.tommy.somerandomstuff.client;public class SomeRandomStuffClient {
+package net.tommy.somerandomstuff.client;
+
+public class SomeRandomStuffClient {
 }

@@ -1,2 +1,4 @@
-package net.tommy.somerandomstuff;public class SomeRandomStuff {
+package net.tommy.somerandomstuff;
+
+public class SomeRandomStuff {
 }

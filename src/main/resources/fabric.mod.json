@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "SomeRandomStuff",
+  "version": "${version}",
+  "name": "SomeRandomStuff",
+  "description": "A few random ideas my friends had",
+  "authors": [
+    "Tommy Tyler"
+  ],
+  "contact": {
+    "repo": "https://github.com/tommyrobot/SomeRandomStuff"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/SomeRandomStuff/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.tommy.somerandomstuff.client.SomeRandomStuffClient"
+    ],
+    "main": [
+      "net.tommy.somerandomstuff.SomeRandomStuff"
+    ]
+  },
+  "mixins": [
+    "SomeRandomStuff.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.3",
+    "fabric": "*",
+    "minecraft": "1.20.4"
+  }
+}

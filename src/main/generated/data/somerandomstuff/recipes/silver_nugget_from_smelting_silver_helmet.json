@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 3.4,
+  "group": "silver_nugget_from_smelting_tools_and_armor",
+  "ingredient": {
+    "item": "somerandomstuff:silver_helmet"
+  },
+  "result": "somerandomstuff:silver_nugget"
+}

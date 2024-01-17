@@ -1,11 +1,14 @@
-// 1.20.4	2024-01-13T20:19:26.21455	SomeRandomStuff/Tags for minecraft:item
+// 1.20.4	2024-01-16T21:07:55.5975578	SomeRandomStuff/Tags for minecraft:item
 f17a8c11a3f8bee82d6960d66d07c4dbeb61db8d data\fabric\tags\items\swords.json
+6ddb5b59cf989c649b1b5958202c962665660ac3 data\c\tags\items\bedrock_leggings.json
 f060af701f918edc76e86670c9e06bfb1d578f12 data\c\tags\items\silver_axes.json
 97331b237766da7b36d3442ca189956cd449ace1 data\fabric\tags\items\shovels.json
+55430f6ef79447cbc59aed0f5fdccb23b7e9d986 data\c\tags\items\bedrock_helmets.json
 f17a8c11a3f8bee82d6960d66d07c4dbeb61db8d data\c\tags\items\silver_swords.json
-a0dfee260d3adbea5cf30363b746e08dfa1c09e3 data\minecraft\tags\items\trimmable_armor.json
+dc7a3ec310818abcee54fa18be13f03214802360 data\minecraft\tags\items\trimmable_armor.json
 f5f91bcbf2a968634fd57802b6a03045237ef619 data\c\tags\items\silver_nuggets.json
 0a954b4fc980c6ccbd9cab7e13d3544c33e52382 data\c\tags\items\silver_pickaxes.json
+7f38b782ef0289e7cf67edbd0ff54f8409646dc9 data\c\tags\items\wood_sticks.json
 0a954b4fc980c6ccbd9cab7e13d3544c33e52382 data\fabric\tags\items\pickaxes.json
 29a14e990067db7a26f73db21d21fd601fca9bb5 data\c\tags\items\raw_silver_blocks.json
 ded25598faf92b46e3b35b79d4b2a0cb618e7aaf data\c\tags\items\silver_ores.json
@@ -13,13 +16,16 @@ ded25598faf92b46e3b35b79d4b2a0cb618e7aaf data\c\tags\items\silver_ores.json
 f060af701f918edc76e86670c9e06bfb1d578f12 data\fabric\tags\items\axes.json
 3a214c2a85aaf3fa771758fe9f963b8ae25f9007 data\c\tags\items\ingots.json
 2ea41ace5fd707b30906ee60c5db731d0e4a3907 data\c\tags\items\silver_boots.json
+0ccdddf82dc4ff3f4ef1080a7ee42f5e04861817 data\c\tags\items\bedrock_boots.json
 23a1c6caffd63bbc101539942fac20c3a3632a92 data\fabric\tags\items\hoes.json
 b3614af191b6d68d83c1d6fcf2cf4a43559142d9 data\c\tags\items\raw_ores.json
 d522b942549e463690aeaa93f707b13cdf672d5f data\c\tags\items\silver_chestplates.json
 fef0e92abaf9adb0a5751dedf0e8e248c4a1131c data\c\tags\items\silver_ingots.json
 4ae0e91318bd45eb486feb9ba96d26db45ecaf52 data\c\tags\items\silver_leggings.json
 23a1c6caffd63bbc101539942fac20c3a3632a92 data\c\tags\items\silver_hoes.json
-b3ca6e023da8b894d468005e769a67e02e7cbecf data\c\tags\items\silver_helmets.json
+2e0e71f7dbffea6202a4421d5c31de9f830d5f59 data\c\tags\items\bedrocks.json
 ded25598faf92b46e3b35b79d4b2a0cb618e7aaf data\c\tags\items\ores.json
+b3ca6e023da8b894d468005e769a67e02e7cbecf data\c\tags\items\silver_helmets.json
+dd27ea1d9dd7f811f5d57aa6a461ad409b0260e6 data\c\tags\items\bedrock_chestplates.json
 b3614af191b6d68d83c1d6fcf2cf4a43559142d9 data\c\tags\items\raw_silvers.json
 0b6e19c417530f01710589be41aca3748d946a84 data\c\tags\items\silver_blocks.json

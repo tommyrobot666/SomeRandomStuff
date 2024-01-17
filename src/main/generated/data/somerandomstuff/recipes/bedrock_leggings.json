@@ -7,10 +7,11 @@
     }
   },
   "pattern": [
+    "###",
     "# #",
     "# #"
   ],
   "result": {
-    "item": "somerandomstuff:silver_boots"
+    "item": "somerandomstuff:silver_leggings"
   }
 }

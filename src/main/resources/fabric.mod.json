@@ -3,12 +3,12 @@
   "id": "somerandomstuff",
   "version": "${version}",
   "name": "SomeRandomStuff",
-  "description": "A few random ideas my friends had",
+  "description": "A few random ideas my friends had\nThe mod Attribute Fix is recommended",
   "authors": [
     "Tommy Tyler"
   ],
   "contact": {
-    "repo": "https://github.com/tommyrobot/SomeRandomStuff"
+    "repo": "https://github.com/tommyrobot666/SomeRandomStuff"
   },
   "license": "All-Rights-Reserved",
   "icon": "assets/SomeRandomStuff/icon.png",

@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.*;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.client.*;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.RecipeProvider;
@@ -107,6 +108,10 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             itemModelGenerator.registerArmor(((ArmorItem) SomeRandomStuff.SILVER_CHESTPLATE));
             itemModelGenerator.registerArmor(((ArmorItem) SomeRandomStuff.SILVER_LEGGINGS));
             itemModelGenerator.registerArmor(((ArmorItem) SomeRandomStuff.SILVER_BOOTS));
+            itemModelGenerator.registerArmor(((ArmorItem) SomeRandomStuff.BEDROCK_HELMET));
+            itemModelGenerator.registerArmor(((ArmorItem) SomeRandomStuff.BEDROCK_CHESTPLATE));
+            itemModelGenerator.registerArmor(((ArmorItem) SomeRandomStuff.BEDROCK_LEGGINGS));
+            itemModelGenerator.registerArmor(((ArmorItem) SomeRandomStuff.BEDROCK_BOOTS));
         }
     }
 
@@ -121,6 +126,7 @@ public class DataGenerator implements DataGeneratorEntrypoint {
         private static final TagKey<Item> RAW_ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c", "raw_ores"));
         private static final TagKey<Item> INGOTS = TagKey.of(RegistryKeys.ITEM, new Identifier("c", "ingots"));
         private static final TagKey<Item> NUGGETS = TagKey.of(RegistryKeys.ITEM, new Identifier("c", "ingots"));
+        private static final TagKey<Item> WOOD_STICKS = TagKey.of(RegistryKeys.ITEM, new Identifier("c", "wood_sticks"));
 
         private static final TagKey<Item> TRIMMABLE_ARMOR = TagKey.of(RegistryKeys.ITEM, new Identifier("minecraft","trimmable_armor"));
 
@@ -136,6 +142,8 @@ public class DataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup arg) {
+            getOrCreateTagBuilder(WOOD_STICKS)
+                    .add(Items.STICK);
             getOrCreateTagBuilder(ORES)
                     .add(SomeRandomStuff.SILVER_ORE.asItem());
             getOrCreateTagBuilder(RAW_ORES)
@@ -159,12 +167,21 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             commonTagFromName(SomeRandomStuff.SILVER_PICKAXE,"s");
             commonTagFromName(SomeRandomStuff.SILVER_AXE,"s");
             commonTagFromName(SomeRandomStuff.SILVER_HOE,"s");
+            commonTagFromName(Items.BEDROCK,"s");
+            commonTagFromName(SomeRandomStuff.BEDROCK_HELMET,"s");
+            commonTagFromName(SomeRandomStuff.BEDROCK_CHESTPLATE,"s");
+            commonTagFromName(SomeRandomStuff.BEDROCK_LEGGINGS,"");
+            commonTagFromName(SomeRandomStuff.BEDROCK_BOOTS,"");
 
             getOrCreateTagBuilder(TRIMMABLE_ARMOR)
                     .add(SomeRandomStuff.SILVER_HELMET)
                     .add(SomeRandomStuff.SILVER_CHESTPLATE)
                     .add(SomeRandomStuff.SILVER_LEGGINGS)
-                    .add(SomeRandomStuff.SILVER_BOOTS);
+                    .add(SomeRandomStuff.SILVER_BOOTS)
+                    .add(SomeRandomStuff.BEDROCK_HELMET)
+                    .add(SomeRandomStuff.BEDROCK_CHESTPLATE)
+                    .add(SomeRandomStuff.BEDROCK_LEGGINGS)
+                    .add(SomeRandomStuff.BEDROCK_BOOTS);
 
             getOrCreateTagBuilder(SWORDS)
                     .add(SomeRandomStuff.SILVER_SWORD);
@@ -188,6 +205,7 @@ public class DataGenerator implements DataGeneratorEntrypoint {
 
         private static final TagKey<Block> MINEABLE_WITH_PICKAXE = TagKey.of(RegistryKeys.BLOCK, new Identifier("minecraft","mineable/pickaxe"));
         private static final TagKey<Block> NEEDS_DIAMOND_TOOL = TagKey.of(RegistryKeys.BLOCK, new Identifier("minecraft","needs_diamond_tool"));
+        private static final TagKey<Block> NEEDS_TOOL_LEVEL_5 = TagKey.of(RegistryKeys.BLOCK, new Identifier("fabric","needs_tool_level_5"));
         private static final TagKey<Block> BEACON_BASE_BLOCKS = TagKey.of(RegistryKeys.BLOCK, new Identifier("minecraft","beacon_base_blocks"));
         private static final TagKey<Block> ORES = TagKey.of(RegistryKeys.BLOCK, new Identifier("c","ores"));
 
@@ -202,15 +220,21 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             getOrCreateTagBuilder(MINEABLE_WITH_PICKAXE)
                     .add(SomeRandomStuff.SILVER_ORE)
                     .add(SomeRandomStuff.SILVER_BLOCK)
-                    .add(SomeRandomStuff.RAW_SILVER_BLOCK);
-            getOrCreateTagBuilder(ORES)
-                    .add(SomeRandomStuff.SILVER_ORE);
+                    .add(SomeRandomStuff.RAW_SILVER_BLOCK)
+                    .add(Blocks.BEDROCK);
+
             getOrCreateTagBuilder(NEEDS_DIAMOND_TOOL)
                     .add(SomeRandomStuff.SILVER_ORE)
                     .add(SomeRandomStuff.SILVER_BLOCK)
                     .add(SomeRandomStuff.RAW_SILVER_BLOCK);
+            getOrCreateTagBuilder(NEEDS_TOOL_LEVEL_5)
+                    .add(Blocks.BEDROCK);
+
             getOrCreateTagBuilder(BEACON_BASE_BLOCKS)
                     .add(SomeRandomStuff.SILVER_BLOCK);
+
+            getOrCreateTagBuilder(ORES)
+                    .add(SomeRandomStuff.SILVER_ORE);
             commonTagFromName(SomeRandomStuff.SILVER_ORE,"s");
             commonTagFromName(SomeRandomStuff.SILVER_BLOCK,"s");
             commonTagFromName(SomeRandomStuff.RAW_SILVER_BLOCK,"s");
@@ -224,6 +248,7 @@ public class DataGenerator implements DataGeneratorEntrypoint {
         private static final TagKey<Item> RAW_SILVER_BLOCKS = TagKey.of(RegistryKeys.ITEM, new Identifier("c","raw_silver_blocks"));
         private static final TagKey<Item> RAW_SILVERS = TagKey.of(RegistryKeys.ITEM, new Identifier("c","raw_silvers"));
         private static final TagKey<Item> WOOD_STICKS = TagKey.of(RegistryKeys.ITEM, new Identifier("c","wood_sticks"));
+        private static final TagKey<Item> BEDROCK = TagKey.of(RegistryKeys.ITEM, new Identifier("c","bedrocks"));
 
 
         private RecipeGenerator(FabricDataOutput generator) {
@@ -285,10 +310,44 @@ public class DataGenerator implements DataGeneratorEntrypoint {
                             FabricRecipeProvider.conditionsFromItem(SomeRandomStuff.SILVER_INGOT))
                     .offerTo(recipeExporter, "silver_leggings");
 
+            ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, SomeRandomStuff.SILVER_HELMET)
+                    .pattern("###")
+                    .pattern("# #")
+                    .input('#',BEDROCK)
+                    .criterion(FabricRecipeProvider.hasItem(Items.BEDROCK),
+                            FabricRecipeProvider.conditionsFromItem(Items.BEDROCK))
+                    .offerTo(recipeExporter, "bedrock_helmet");
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, SomeRandomStuff.SILVER_CHESTPLATE)
+                    .pattern("# #")
+                    .pattern("###")
+                    .pattern("###")
+                    .input('#',BEDROCK)
+                    .criterion(FabricRecipeProvider.hasItem(Items.BEDROCK),
+                            FabricRecipeProvider.conditionsFromItem(Items.BEDROCK))
+                    .offerTo(recipeExporter, "bedrock_chestplate");
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, SomeRandomStuff.SILVER_LEGGINGS)
+                    .pattern("###")
+                    .pattern("# #")
+                    .pattern("# #")
+                    .input('#',BEDROCK)
+                    .criterion(FabricRecipeProvider.hasItem(Items.BEDROCK),
+                            FabricRecipeProvider.conditionsFromItem(Items.BEDROCK))
+                    .offerTo(recipeExporter, "bedrock_leggings");
+
             ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, SomeRandomStuff.SILVER_BOOTS)
                     .pattern("# #")
                     .pattern("# #")
-                    .input('#',SILVER_INGOTS)
+                    .input('#',BEDROCK)
+                    .criterion(FabricRecipeProvider.hasItem(Items.BEDROCK),
+                            FabricRecipeProvider.conditionsFromItem(Items.BEDROCK))
+                    .offerTo(recipeExporter, "bedrock_boots");
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, SomeRandomStuff.SILVER_BOOTS)
+                    .pattern("# #")
+                    .pattern("# #")
+                    .input('#',BEDROCK)
                     .criterion(FabricRecipeProvider.hasItem(SomeRandomStuff.SILVER_INGOT),
                             FabricRecipeProvider.conditionsFromItem(SomeRandomStuff.SILVER_INGOT))
                     .offerTo(recipeExporter, "silver_boots");
@@ -420,6 +479,10 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             translationBuilder.add(SomeRandomStuff.SILVER_PICKAXE, "Silver Pickaxe");
             translationBuilder.add(SomeRandomStuff.SILVER_AXE, "Silver Axe");
             translationBuilder.add(SomeRandomStuff.SILVER_HOE, "Silver Hoe");
+            translationBuilder.add(SomeRandomStuff.BEDROCK_HELMET,"Bedrock Helmet");
+            translationBuilder.add(SomeRandomStuff.BEDROCK_CHESTPLATE,"Bedrock Chestplate");
+            translationBuilder.add(SomeRandomStuff.BEDROCK_LEGGINGS,"Bedrock Leggings");
+            translationBuilder.add(SomeRandomStuff.BEDROCK_BOOTS,"Bedrock Boots");
 
             // Load an existing language file.
             try {

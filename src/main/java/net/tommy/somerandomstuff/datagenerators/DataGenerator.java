@@ -31,10 +31,10 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.tommy.somerandomstuff.SomeRandomStuff;
+import net.tommy.somerandomstuff.block.complexmachine.ComplexMachine;
 
 import java.nio.file.Path;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 public class DataGenerator implements DataGeneratorEntrypoint {
@@ -69,6 +69,7 @@ public class DataGenerator implements DataGeneratorEntrypoint {
 
             addDrop(SomeRandomStuff.SILVER_BLOCK, drops(SomeRandomStuff.SILVER_BLOCK));
             addDrop(SomeRandomStuff.RAW_SILVER_BLOCK, drops(SomeRandomStuff.RAW_SILVER_BLOCK));
+            addDrop(SomeRandomStuff.COMPLEX_MACHINE, drops(SomeRandomStuff.COMPLEX_MACHINE));
         }
     }
 
@@ -81,11 +82,76 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             new Model(Optional.of(new Identifier(SomeRandomStuff.MOD_ID, "block/" + Registries.BLOCK.getId(block).getPath())), Optional.empty()).upload(ModelIds.getItemModelId(block.asItem()), TextureMap.all(block), itemModelGenerator.writer);
         }
 
+        public MultipartBlockStateSupplier complexMachineStateSupplier(Block block){
+            MultipartBlockStateSupplier stateSupplier = MultipartBlockStateSupplier.create(block);
+            for (int N = 0; N < 2; N++){
+                for (int E = 0; E < 2; E++){
+                    for (int S = 0; S < 2; S++){
+                        for (int W = 0; W < 2; W++){
+                            for (int U = 0; U < 2; U++){
+                                for (int D = 0; D < 2; D++){
+                                    stateSupplier.with(When.create().
+                                                    set(ComplexMachine.TOUCHING_NORTH, N != 0)
+                                                    .set(ComplexMachine.TOUCHING_EAST, E != 0)
+                                                    .set(ComplexMachine.TOUCHING_SOUTH, S != 0)
+                                                    .set(ComplexMachine.TOUCHING_WEST, W != 0)
+                                                    .set(ComplexMachine.TOUCHING_UP, U != 0)
+                                                    .set(ComplexMachine.TOUCHING_DOWN, D != 0),
+                                            BlockStateVariant.create().put(VariantSettings.MODEL, Registries.BLOCK.getId(block).withSuffixedPath("_"+N+""+E+""+S+""+W+""+U+""+D).withPrefixedPath("block/"+Registries.BLOCK.getId(block).getPath()+"/")));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return stateSupplier;
+        }
+
+        public void complexMachineModelCreator(Block block, BlockStateModelGenerator blockStateModelGenerator){
+            for (int N = 0; N < 2; N++){
+                for (int E = 0; E < 2; E++){
+                    for (int S = 0; S < 2; S++){
+                        for (int W = 0; W < 2; W++){
+                            for (int U = 0; U < 2; U++){
+                                for (int D = 0; D < 2; D++){
+                                    Identifier modelName = new Identifier(SomeRandomStuff.MOD_ID, "block/"+Registries.BLOCK.getId(block).getPath()+"/"+ Registries.BLOCK.getId(block).getPath()+"_"+N+""+E+""+S+""+W+""+U+""+D);
+                                    TextureMap textures = determineTexturesOfComplexMachineModel(N, E, S, W, U, D,block);
+                                    Model model = new Model(Optional.of(new Identifier("minecraft","block/cube_all")),Optional.empty(),TextureKey.NORTH,TextureKey.EAST,TextureKey.SOUTH,TextureKey.WEST,TextureKey.UP,TextureKey.DOWN,TextureKey.PARTICLE);
+                                    model.upload(modelName,textures, blockStateModelGenerator.modelCollector);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private static TextureMap determineTexturesOfComplexMachineModel(int N, int E, int S, int W, int U, int D,Block block) {
+            return new TextureMap()
+                    .put(TextureKey.NORTH,determineTextureOfComplexMachineFaceOrAir(N,U,D,E,W,block))
+                    .put(TextureKey.EAST,determineTextureOfComplexMachineFaceOrAir(E,U,D,S,N,block))
+                    .put(TextureKey.SOUTH,determineTextureOfComplexMachineFaceOrAir(S,U,D,W,E,block))
+                    .put(TextureKey.WEST,determineTextureOfComplexMachineFaceOrAir(W,U,D,N,S,block))
+                    .put(TextureKey.UP,determineTextureOfComplexMachineFaceOrAir(U,N,S,W,E,block))
+                    .put(TextureKey.DOWN,determineTextureOfComplexMachineFaceOrAir(D,N,S,W,E,block))
+                    .put(TextureKey.PARTICLE,new Identifier(SomeRandomStuff.MOD_ID,"block/complex_machine/complex_machine_0000"));
+        }
+
+        private static Identifier determineTextureOfComplexMachineFaceOrAir(int side,int U, int D, int L, int R,Block block) {
+            return side != 0?new Identifier(SomeRandomStuff.MOD_ID, "block/complex_machine/complex_machine_1111"):determineTextureOfComplexMachineFace(U,D,L,R,block);
+        }
+
+        private static Identifier determineTextureOfComplexMachineFace(int U, int D, int L, int R,Block block) {
+            return new Identifier(SomeRandomStuff.MOD_ID,"block/"+Registries.BLOCK.getId(block).getPath()+"/"+Registries.BLOCK.getId(block).getPath()+"_"+U+""+D+""+L+""+R);
+        }
+
         @Override
         public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
             blockStateModelGenerator.registerSimpleCubeAll(SomeRandomStuff.SILVER_ORE);
             blockStateModelGenerator.registerSimpleCubeAll(SomeRandomStuff.SILVER_BLOCK);
             blockStateModelGenerator.registerSimpleCubeAll(SomeRandomStuff.RAW_SILVER_BLOCK);
+            blockStateModelGenerator.blockStateCollector.accept(complexMachineStateSupplier(SomeRandomStuff.COMPLEX_MACHINE));
+            complexMachineModelCreator(SomeRandomStuff.COMPLEX_MACHINE, blockStateModelGenerator);
         }
 
         @Override
@@ -483,6 +549,7 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             translationBuilder.add(SomeRandomStuff.BEDROCK_CHESTPLATE,"Bedrock Chestplate");
             translationBuilder.add(SomeRandomStuff.BEDROCK_LEGGINGS,"Bedrock Leggings");
             translationBuilder.add(SomeRandomStuff.BEDROCK_BOOTS,"Bedrock Boots");
+            translationBuilder.add(SomeRandomStuff.COMPLEX_MACHINE, "Complex Machine");
 
             // Load an existing language file.
             try {

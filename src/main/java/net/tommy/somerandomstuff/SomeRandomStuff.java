@@ -4,25 +4,25 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
+import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ExperienceDroppingBlock;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.item.*;
 import net.minecraft.particle.DefaultParticleType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.*;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -33,13 +33,27 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.PlacedFeature;
+import net.tommy.somerandomstuff.block.complexmachine.ComplexMachine;
+import net.tommy.somerandomstuff.block.complexmachine.ComplexMachineEntity;
+import net.tommy.somerandomstuff.block.complexmachine.MachinePart;
+import net.tommy.somerandomstuff.block.complexmachine.machineparts.HopperMachinePart;
+import net.tommy.somerandomstuff.block.complexmachine.machineparts.RedstoneWireMachinePart;
 import net.tommy.somerandomstuff.entitys.PetSlimeEntity;
 import net.tommy.somerandomstuff.item.armor.BedrockArmorMaterial;
 import net.tommy.somerandomstuff.item.armor.SilverArmorMaterial;
 import net.tommy.somerandomstuff.item.tool.SilverToolMaterial;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SomeRandomStuff implements ModInitializer {
     public static final String MOD_ID = "somerandomstuff";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
+    public static RegistryKey<Registry<MachinePart>> COMPLEX_MACHINE_PART_TYPE_KEY = RegistryKey.ofRegistry(new Identifier(MOD_ID,"machine_part_type"));
+    //public static Registry<MachinePart> COMPLEX_MACHINE_PART_TYPE = FabricRegistryBuilder.createDefaulted(COMPLEX_MACHINE_PART_TYPE_KEY,new Identifier("","")).buildAndRegister();
+    public static Registry<MachinePart> COMPLEX_MACHINE_PART_TYPE = FabricRegistryBuilder.createSimple(COMPLEX_MACHINE_PART_TYPE_KEY).buildAndRegister();
+
+    //RegistriesAccessor.setDefaultEntries(RegistriesAccessor.getDefaultEntries().add(default machine part))
 
     public static final Block SILVER_ORE = new ExperienceDroppingBlock(UniformIntProvider.create(7, 13),FabricBlockSettings.copyOf(Blocks.ANCIENT_DEBRIS).sounds(BlockSoundGroup.DEEPSLATE).mapColor(DyeColor.LIGHT_GRAY));
     public static final Block SILVER_BLOCK = new Block(FabricBlockSettings.copyOf(Blocks.NETHERITE_BLOCK).mapColor(DyeColor.LIGHT_GRAY));
@@ -74,6 +88,14 @@ public class SomeRandomStuff implements ModInitializer {
     public static final Item SILVER_AXE = new AxeItem(SILVER_TOOL_MATERIAL, 17, -3.2f, new FabricItemSettings().rarity(Rarity.UNCOMMON));
     public static final Item SILVER_HOE = new HoeItem(SILVER_TOOL_MATERIAL, 0, -1.8f, new FabricItemSettings().rarity(Rarity.UNCOMMON));
 
+    public static final Block COMPLEX_MACHINE = new ComplexMachine(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque());
+
+    public static final BlockEntityType<ComplexMachineEntity> COMPLEX_MACHINE_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            new Identifier(MOD_ID, "complex_machine_entity"),
+            FabricBlockEntityTypeBuilder.create(ComplexMachineEntity::new, COMPLEX_MACHINE).build()
+    );
+
     public static final EntityType<PetSlimeEntity> PET_SLIME = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(MOD_ID,"pet_slime"),
@@ -106,6 +128,7 @@ public class SomeRandomStuff implements ModInitializer {
                 entries.add(BEDROCK_LEGGINGS);
                 entries.add(BEDROCK_BOOTS);
                 entries.add(PET_SLIME_SPAWN_EGG);
+                entries.add(COMPLEX_MACHINE);
             })
             .build();
 
@@ -140,6 +163,10 @@ public class SomeRandomStuff implements ModInitializer {
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "bedrock_leggings"), BEDROCK_LEGGINGS);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "bedrock_boots"), BEDROCK_BOOTS);
 
+        Registry.register(Registries.BLOCK, new Identifier(MOD_ID,"complex_machine"), COMPLEX_MACHINE);
+
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "complex_machine"), new BlockItem(COMPLEX_MACHINE, new FabricItemSettings()));
+
         FabricDefaultAttributeRegistry.register(PET_SLIME, PetSlimeEntity.createPetSlimeAttributes());
 
         Registry.register(Registries.ITEM, new Identifier(MOD_ID,"pet_slime_spawn_egg"), PET_SLIME_SPAWN_EGG);
@@ -152,19 +179,27 @@ public class SomeRandomStuff implements ModInitializer {
 
         AttackBlockCallback.EVENT.register((player,world,hand,pos,direction)->{
             if (world.getBlockState(pos).isOf(Blocks.BEDROCK)||world.getBlockState(pos).isOf(Blocks.DEAD_BRAIN_CORAL_BLOCK)) {
-                player.sendMessage(Text.literal("YOU FOUND THE BEDROCK GEN"));
-                MiningToolItem players_mining_tool = (MiningToolItem) player.getStackInHand(hand).getItem();
-                if (players_mining_tool == null){
-                    player.sendMessage(Text.literal("YOU NEED A PICKAXE"));
-                    return ActionResult.SUCCESS;
+                //player.sendMessage(Text.literal("YOU FOUND THE BEDROCK GEN"));
+                try {
+                    MiningToolItem players_mining_tool = (MiningToolItem) player.getStackInHand(hand).getItem();
+                    if (players_mining_tool.isSuitableFor(world.getBlockState(pos))) {
+                        BlockPos item_spawn_pos = pos.add(direction.getVector());
+                        world.spawnEntity(new ItemEntity(world,item_spawn_pos.getX()-0.5,item_spawn_pos.getY()-0.5,item_spawn_pos.getZ()-0.5,new ItemStack(Items.BEDROCK),direction.getVector().getX()*0.1,direction.getVector().getY()*0.1,direction.getVector().getZ()*0.1));
+                        return ActionResult.SUCCESS;
+                    }
                 }
-                if (players_mining_tool.isSuitableFor(world.getBlockState(pos))) {
-                    BlockPos item_spawn_pos = pos.add(direction.getVector());
-                    world.spawnEntity(new ItemEntity(world,item_spawn_pos.getX()-0.5,item_spawn_pos.getY()-0.5,item_spawn_pos.getZ()-0.5,new ItemStack(Items.BEDROCK),direction.getVector().getX()*0.1,direction.getVector().getY()*0.1,direction.getVector().getZ()*0.1));
+                catch (ClassCastException e) {
+                    //player.sendMessage(Text.literal("YOU NEED A PICKAXE"));
                     return ActionResult.SUCCESS;
                 }
             }
             return ActionResult.PASS;
         });
+
+        Registry.register(COMPLEX_MACHINE_PART_TYPE,new Identifier("",""),new MachinePart());
+        Registry.register(COMPLEX_MACHINE_PART_TYPE,new Identifier(MOD_ID,"redstone_wire"),new RedstoneWireMachinePart());
+        Registry.register(COMPLEX_MACHINE_PART_TYPE,new Identifier(MOD_ID, "hopper"), new HopperMachinePart());
+        LOGGER.error(COMPLEX_MACHINE_PART_TYPE.getIds().toString());
+        COMPLEX_MACHINE_PART_TYPE.streamEntries().forEach(machinePartReference -> {LOGGER.error(machinePartReference.value().toString());});
     }
 }

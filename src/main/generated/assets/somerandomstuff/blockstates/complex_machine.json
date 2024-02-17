@@ -1,0 +1,836 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_000000"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_000001"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_000010"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_000011"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_000100"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_000101"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_000110"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_000111"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_001000"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_001001"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_001010"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_001011"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_001100"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_001101"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_001110"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_001111"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_010000"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_010001"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_010010"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_010011"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_010100"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_010101"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_010110"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_010111"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_011000"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_011001"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_011010"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_011011"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_011100"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_011101"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_011110"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_011111"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "false",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_100000"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_100001"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_100010"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_100011"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_100100"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_100101"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_100110"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_100111"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_101000"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_101001"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_101010"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_101011"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_101100"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_101101"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_101110"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_101111"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "false",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_110000"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_110001"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_110010"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_110011"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_110100"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_110101"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_110110"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_110111"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "false",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_111000"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_111001"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_111010"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_111011"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_111100"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_111101"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "false",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_111110"
+      },
+      "when": {
+        "touching_down": "false",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "somerandomstuff:block/complex_machine/complex_machine_111111"
+      },
+      "when": {
+        "touching_down": "true",
+        "touching_east": "true",
+        "touching_north": "true",
+        "touching_south": "true",
+        "touching_up": "true",
+        "touching_west": "true"
+      }
+    }
+  ]
+}

@@ -1,9 +1,9 @@
-// 1.20.4	2024-01-16T21:07:55.6155409	SomeRandomStuff/Tags for minecraft:block
+// 1.20.4	2024-01-21T15:29:40.5093689	SomeRandomStuff/Tags for minecraft:block
 2e0e71f7dbffea6202a4421d5c31de9f830d5f59 data\fabric\tags\blocks\needs_tool_level_5.json
 0b6e19c417530f01710589be41aca3748d946a84 data\minecraft\tags\blocks\beacon_base_blocks.json
 0b6e19c417530f01710589be41aca3748d946a84 data\c\tags\blocks\silver_blocks.json
 ded25598faf92b46e3b35b79d4b2a0cb618e7aaf data\c\tags\blocks\silver_ores.json
 ded25598faf92b46e3b35b79d4b2a0cb618e7aaf data\c\tags\blocks\ores.json
-3dbe7d8e3c6b3c08495696f9693c522646650ddf data\minecraft\tags\blocks\needs_diamond_tool.json
 29a14e990067db7a26f73db21d21fd601fca9bb5 data\c\tags\blocks\raw_silver_blocks.json
+3dbe7d8e3c6b3c08495696f9693c522646650ddf data\minecraft\tags\blocks\needs_diamond_tool.json
 375a01eb94a5324d098008715c62bc45b8e60e5c data\minecraft\tags\blocks\mineable\pickaxe.json

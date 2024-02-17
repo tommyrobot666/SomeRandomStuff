@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "down": "somerandomstuff:block/complex_machine/complex_machine_1111",
+    "east": "somerandomstuff:block/complex_machine/complex_machine_1100",
+    "north": "somerandomstuff:block/complex_machine/complex_machine_1101",
+    "particle": "somerandomstuff:block/complex_machine/complex_machine_0000",
+    "south": "somerandomstuff:block/complex_machine/complex_machine_1110",
+    "up": "somerandomstuff:block/complex_machine/complex_machine_1111",
+    "west": "somerandomstuff:block/complex_machine/complex_machine_1111"
+  }
+}

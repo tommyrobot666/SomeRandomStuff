@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.tommy.somerandomstuff.SomeRandomStuff;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,6 +111,7 @@ public class MachinePart {
         return false;
     }
 
+    @NotNull
     public MachinePartUpdate constructUpdateWithOwnData(){
         return new MachinePartUpdate();
     }

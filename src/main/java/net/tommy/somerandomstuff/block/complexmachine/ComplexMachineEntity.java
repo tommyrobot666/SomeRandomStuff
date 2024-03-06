@@ -3,11 +3,13 @@ package net.tommy.somerandomstuff.block.complexmachine;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
@@ -19,9 +21,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class ComplexMachineEntity extends BlockEntity {
-    public static final int PARTS_IN_EACH_BLOCK = 1;
-    public ArrayList<MachinePart> whole_machine_parts =  new ArrayList<>();
+public class ComplexMachineEntity extends BlockEntity implements Inventory {
+    public static final String MACHINE_PART_KEY = "ComplexMachinePart";
+    public static final int PARTS_IN_EACH_BLOCK = 2;
+    public ArrayList<MachinePart> whole_machine_parts = new ArrayList<>();
+
+    public ArrayList<ItemStack> partItems = new ArrayList<>();
     public ArrayList<MachinePart> parts;
     public ArrayList<Byte> empty = new ArrayList<>();
     public Box size = new Box(0,0,0,0,0,0);
@@ -31,6 +36,7 @@ public class ComplexMachineEntity extends BlockEntity {
         parts = new ArrayList<>(); // Initialize the parts list
         for (int i = 0; i < Math.pow(PARTS_IN_EACH_BLOCK,3);i++){
             parts.add(new MachinePart());
+            partItems.add(ItemStack.EMPTY);
         }
     }
 
@@ -38,8 +44,22 @@ public class ComplexMachineEntity extends BlockEntity {
         if (world.isClient()){
             return;
         }
+        if (be.parts.size() != be.partItems.size()){
+            throw new IllegalStateException("Size of parts list is unequal to size of part's items list (every part must have a corresponding item)");
+        }
         updateSizeBoxAndPartsArray(world, pos, state.getBlock(),be,128);
         tickParts(be,world);
+        updatePartItems(be);
+    }
+
+    static void updatePartItems(ComplexMachineEntity entity){
+        for (int i = 0; i < entity.partItems.size(); i++){
+            ItemStack itemStack = entity.partItems.get(i);
+            if (itemStack.getNbt() != null) {
+                itemStack.getNbt().remove(MACHINE_PART_KEY);
+                itemStack.getNbt().put(MACHINE_PART_KEY, entity.parts.get(i).toNbt());
+            }
+        }
     }
 
     static void tickParts(ComplexMachineEntity entity, World world){
@@ -48,37 +68,30 @@ public class ComplexMachineEntity extends BlockEntity {
             for (Direction direction : Direction.values()){
                 if (onEdgeOfList(entity.parts.indexOf(part), PARTS_IN_EACH_BLOCK, PARTS_IN_EACH_BLOCK, direction)){
                     if (world.getBlockState(entity.pos.add(direction.getVector())).isOf(SomeRandomStuff.COMPLEX_MACHINE)){
-                        nearbyParts.put(direction,((ComplexMachineEntity)world.getBlockEntity(entity.pos.add(direction.getVector()))).parts.get(((entity.parts.indexOf(part)-(entity.parts.indexOf(part)/(PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK))*PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK%PARTS_IN_EACH_BLOCK)%PARTS_IN_EACH_BLOCK)
-                                *((entity.parts.indexOf(part)-(entity.parts.indexOf(part)/(PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK))*PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK/PARTS_IN_EACH_BLOCK%PARTS_IN_EACH_BLOCK)
-                                *(entity.parts.indexOf(part)/(PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK)%PARTS_IN_EACH_BLOCK))));
+                        nearbyParts.put(direction,((ComplexMachineEntity)world.getBlockEntity(entity.pos.add(direction.getVector()))).parts.get(calculateIndexOfMachinePartOfOtherMachine(listIndexToPos(entity.parts.indexOf(part),PARTS_IN_EACH_BLOCK,PARTS_IN_EACH_BLOCK),direction)));
                     } else {
                         nearbyParts.put(direction,null);
                     }
                 } else {
-                    nearbyParts.put(direction,entity.parts.get(((entity.parts.indexOf(part)-(entity.parts.indexOf(part)/(PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK))*PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK%PARTS_IN_EACH_BLOCK)+direction.getVector().getZ())
-                            *((entity.parts.indexOf(part)-(entity.parts.indexOf(part)/(PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK))*PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK/PARTS_IN_EACH_BLOCK+direction.getVector().getY())
-                            *(entity.parts.indexOf(part)/(PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK)+direction.getVector().getX()))));
+                    nearbyParts.put(direction,entity.parts.get(blockPosToListIndex(listIndexToPos(entity.parts.indexOf(part),PARTS_IN_EACH_BLOCK,PARTS_IN_EACH_BLOCK).add(direction.getVector()),PARTS_IN_EACH_BLOCK,PARTS_IN_EACH_BLOCK)));
                 }
             }
             Map<Direction,MachinePartUpdate> toUpdate = part.tick(nearbyParts,world,entity.getPos());
             for (Direction direction : toUpdate.keySet()){
                 if (onEdgeOfList(entity.parts.indexOf(part), PARTS_IN_EACH_BLOCK, PARTS_IN_EACH_BLOCK, direction)){
                     if (world.getBlockState(entity.pos.add(direction.getVector())).isOf(SomeRandomStuff.COMPLEX_MACHINE)){
-                        ((ComplexMachineEntity)world.getBlockEntity(entity.pos.add(direction.getVector()))).parts.get(((entity.parts.indexOf(part)-(entity.parts.indexOf(part)/(PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK))*PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK%PARTS_IN_EACH_BLOCK)%PARTS_IN_EACH_BLOCK)
-                                *((entity.parts.indexOf(part)-(entity.parts.indexOf(part)/(PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK))*PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK/PARTS_IN_EACH_BLOCK%PARTS_IN_EACH_BLOCK)
-                                *(entity.parts.indexOf(part)/(PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK)%PARTS_IN_EACH_BLOCK))).update(toUpdate.get(direction));
+                        ((ComplexMachineEntity)world.getBlockEntity(entity.pos.add(direction.getVector()))).parts.get(calculateIndexOfMachinePartOfOtherMachine(listIndexToPos(entity.parts.indexOf(part),PARTS_IN_EACH_BLOCK,PARTS_IN_EACH_BLOCK),direction)).update(toUpdate.get(direction));
                     }
                 } else {
-                    entity.parts.get(((entity.parts.indexOf(part)-(entity.parts.indexOf(part)/(PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK))*PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK%PARTS_IN_EACH_BLOCK)+direction.getVector().getZ())
-                            *((entity.parts.indexOf(part)-(entity.parts.indexOf(part)/(PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK))*PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK/PARTS_IN_EACH_BLOCK+direction.getVector().getY())
-                            *(entity.parts.indexOf(part)/(PARTS_IN_EACH_BLOCK*PARTS_IN_EACH_BLOCK)+direction.getVector().getX()))).update(toUpdate.get(direction));
+                    entity.parts.get(blockPosToListIndex(listIndexToPos(entity.parts.indexOf(part),PARTS_IN_EACH_BLOCK,PARTS_IN_EACH_BLOCK).add(direction.getVector()),PARTS_IN_EACH_BLOCK,PARTS_IN_EACH_BLOCK)).update(toUpdate.get(direction));
                 }
             }
         }
     }
 
-    public void addPart(MachinePart part,int index){
+    public void setPart(MachinePart part,ItemStack itemStack ,int index){
         parts.set(index, part);
+        partItems.set(index, itemStack);
     }
 
     // make private later
@@ -119,7 +132,7 @@ public class ComplexMachineEntity extends BlockEntity {
                         assert connected_entity != null;
                         //list_to_return.set(l+boxWidth*k+boxWidth*boxHeight*j, connected_entity.parts.get(current_point.getZ()+part_of_whole_machine_parts_Z+current_point.getY()+part_of_whole_machine_parts_Y*boxWidth+ current_point.getX()+part_of_whole_machine_parts_X*boxWidth*boxHeight));
                         try {
-                            list_to_return.set(l + boxWidth * k + boxWidth * boxHeight * j, connected_entity.parts.get(part_of_whole_machine_parts_Z + PARTS_IN_EACH_BLOCK * part_of_whole_machine_parts_Y + PARTS_IN_EACH_BLOCK * PARTS_IN_EACH_BLOCK * part_of_whole_machine_parts_X));
+                            list_to_return.set(l + boxWidth * k + boxWidth * boxHeight * j, connected_entity.parts.get(blockPosToListIndex(new BlockPos(part_of_whole_machine_parts_X,part_of_whole_machine_parts_Y,part_of_whole_machine_parts_Z),boxWidth,boxHeight)));
                         } catch (IndexOutOfBoundsException e){
                             SomeRandomStuff.LOGGER.error("Complex Machine had trouble getting parts of other Machine");
                         }
@@ -142,8 +155,8 @@ public class ComplexMachineEntity extends BlockEntity {
         int boxWidth = (int) (box.maxZ-box.minZ);
         int boxHeight = (int) (box.maxY-box.minY);
         //int oldBoxLength = (int) (entity.size.maxX-entity.size.minX);
-        int oldBoxWidth = (int) (entity.size.maxZ-entity.size.minZ);
-        int oldBoxHeight = (int) (entity.size.maxY-entity.size.minY);
+        //int oldBoxWidth = (int) (entity.size.maxZ-entity.size.minZ);
+        //int oldBoxHeight = (int) (entity.size.maxY-entity.size.minY);
         for (int j = 0;j <= (boxLength)*PARTS_IN_EACH_BLOCK;j++){
             for (int k = 0;k <= (boxHeight)*PARTS_IN_EACH_BLOCK;k++){
                 for (int l = 0;l <= (boxWidth)*PARTS_IN_EACH_BLOCK;l++){
@@ -217,8 +230,7 @@ public class ComplexMachineEntity extends BlockEntity {
     }
 
     private static boolean onEdgeOfList(int index, int width, int height, Direction direction){
-        int number = index-(index/(width*height))*width*height;
-        BlockPos listPosition = new BlockPos(index/(width*height),number/width,number%width);
+        BlockPos listPosition = listIndexToPos(index,width,height);
         if (listPosition.add(direction.getVector()).getZ()<0){
             return true;
         }
@@ -273,6 +285,36 @@ public class ComplexMachineEntity extends BlockEntity {
         size = new Box(box_array[0],box_array[1],box_array[2],box_array[3],box_array[4],box_array[5]);
     }
 
+    private static BlockPos listIndexToPos(int idx, int width, int height){
+        int a = width * height;
+        int b = idx - a * (idx/a);
+        return new BlockPos(idx/a,b/width,b%width);
+    }
+
+    private static int blockPosToListIndex(BlockPos pos, int width, int height){
+        return pos.getZ() + pos.getY() * width + pos.getX() * width * height;
+    }
+
+    private static int calculateIndexOfMachinePartOfOtherMachine(BlockPos machinePartInThisMachine, Direction direction){
+        int to_return = 0;
+        switch (direction.getId()){
+            case 0: case 1: {
+                to_return = blockPosToListIndex(machinePartInThisMachine.withY(PARTS_IN_EACH_BLOCK-machinePartInThisMachine.getY()),PARTS_IN_EACH_BLOCK,PARTS_IN_EACH_BLOCK);
+                break;
+            }
+            case 2: case 3: {
+                to_return = blockPosToListIndex(machinePartInThisMachine.north(machinePartInThisMachine.getZ())
+                        .south(PARTS_IN_EACH_BLOCK-machinePartInThisMachine.getZ()),PARTS_IN_EACH_BLOCK,PARTS_IN_EACH_BLOCK);
+                break;
+            }
+            case 4: case 5: {
+                to_return = blockPosToListIndex(machinePartInThisMachine.west(machinePartInThisMachine.getX())
+                        .east(PARTS_IN_EACH_BLOCK-machinePartInThisMachine.getX()),PARTS_IN_EACH_BLOCK,PARTS_IN_EACH_BLOCK);
+            }
+        }
+        return to_return;
+    }
+
     //Warning: Need to call world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS); to trigger the update, otherwise the client does not know that the block entity has been changed.
     @Nullable
     @Override
@@ -285,4 +327,44 @@ public class ComplexMachineEntity extends BlockEntity {
         return createNbt();
     }
 
+    // methods for stack scatterer
+    @Override
+    public int size() {
+        return partItems.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return partItems.isEmpty();
+    }
+
+    @Override
+    public ItemStack getStack(int slot) {
+        return partItems.get(slot);
+    }
+
+    @Override
+    public ItemStack removeStack(int slot, int amount) {
+        throw new IllegalStateException("Don't Remove stacks");
+    }
+
+    @Override
+    public ItemStack removeStack(int slot) {
+        throw new IllegalStateException("Don't Remove stacks");
+    }
+
+    @Override
+    public void setStack(int slot, ItemStack stack) {
+        partItems.set(slot, stack);
+    }
+
+    @Override
+    public boolean canPlayerUse(PlayerEntity player) {
+        return true;
+    }
+
+    @Override
+    public void clear() {
+        throw new IllegalStateException("Don't clear");
+    }
 }

@@ -1,4 +1,4 @@
-// 1.20.4	2024-01-21T15:29:40.4764004	SomeRandomStuff/Tags for minecraft:item
+// 1.20.4	2024-03-04T21:43:32.154805	SomeRandomStuff/Tags for minecraft:item
 f17a8c11a3f8bee82d6960d66d07c4dbeb61db8d data\fabric\tags\items\swords.json
 6ddb5b59cf989c649b1b5958202c962665660ac3 data\c\tags\items\bedrock_leggings.json
 f060af701f918edc76e86670c9e06bfb1d578f12 data\c\tags\items\silver_axes.json
@@ -24,8 +24,8 @@ fef0e92abaf9adb0a5751dedf0e8e248c4a1131c data\c\tags\items\silver_ingots.json
 4ae0e91318bd45eb486feb9ba96d26db45ecaf52 data\c\tags\items\silver_leggings.json
 23a1c6caffd63bbc101539942fac20c3a3632a92 data\c\tags\items\silver_hoes.json
 2e0e71f7dbffea6202a4421d5c31de9f830d5f59 data\c\tags\items\bedrocks.json
-ded25598faf92b46e3b35b79d4b2a0cb618e7aaf data\c\tags\items\ores.json
 b3ca6e023da8b894d468005e769a67e02e7cbecf data\c\tags\items\silver_helmets.json
+ded25598faf92b46e3b35b79d4b2a0cb618e7aaf data\c\tags\items\ores.json
 dd27ea1d9dd7f811f5d57aa6a461ad409b0260e6 data\c\tags\items\bedrock_chestplates.json
 b3614af191b6d68d83c1d6fcf2cf4a43559142d9 data\c\tags\items\raw_silvers.json
 0b6e19c417530f01710589be41aca3748d946a84 data\c\tags\items\silver_blocks.json

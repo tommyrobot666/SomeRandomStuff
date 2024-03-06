@@ -21,6 +21,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.item.*;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.registry.*;
 import net.minecraft.sound.BlockSoundGroup;
@@ -44,6 +45,8 @@ import net.tommy.somerandomstuff.item.armor.SilverArmorMaterial;
 import net.tommy.somerandomstuff.item.tool.SilverToolMaterial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Optional;
 
 public class SomeRandomStuff implements ModInitializer {
     public static final String MOD_ID = "somerandomstuff";
@@ -129,6 +132,14 @@ public class SomeRandomStuff implements ModInitializer {
                 entries.add(BEDROCK_BOOTS);
                 entries.add(PET_SLIME_SPAWN_EGG);
                 entries.add(COMPLEX_MACHINE);
+                NbtCompound redstoneMachinePartStackNBT = new NbtCompound();
+                redstoneMachinePartStackNBT.put(ComplexMachineEntity.MACHINE_PART_KEY,new RedstoneWireMachinePart().toNbt());
+                ItemStack redstoneMachinePartStack = new ItemStack(Registries.ITEM.getEntry(Items.REDSTONE),1, Optional.of(redstoneMachinePartStackNBT));
+                entries.add(redstoneMachinePartStack);
+                NbtCompound hopperMachinePartStackNBT = new NbtCompound();
+                hopperMachinePartStackNBT.put(ComplexMachineEntity.MACHINE_PART_KEY,new HopperMachinePart().toNbt());
+                ItemStack hopperMachinePartStack = new ItemStack(Registries.ITEM.getEntry(Items.HOPPER),1, Optional.of(hopperMachinePartStackNBT));
+                entries.add(hopperMachinePartStack);
             })
             .build();
 

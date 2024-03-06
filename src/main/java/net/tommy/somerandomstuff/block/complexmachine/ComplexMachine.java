@@ -10,13 +10,17 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.loot.context.LootContextParameterSet;
+import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.*;
 import net.minecraft.world.BlockRenderView;
@@ -26,7 +30,10 @@ import net.tommy.somerandomstuff.SomeRandomStuff;
 import net.tommy.somerandomstuff.block.complexmachine.machineparts.HopperMachinePart;
 import org.jetbrains.annotations.Nullable;
 
-public class ComplexMachine extends BlockWithEntity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ComplexMachine extends BlockWithEntity{
     public static final BooleanProperty TOUCHING_NORTH = BooleanProperty.of("touching_north");
     public static final BooleanProperty TOUCHING_EAST = BooleanProperty.of("touching_east");
     public static final BooleanProperty TOUCHING_SOUTH = BooleanProperty.of("touching_south");
@@ -119,19 +126,25 @@ public class ComplexMachine extends BlockWithEntity {
             NbtCompound partNbt;
             try {
                 assert stack.getNbt() != null;
-                partNbt = stack.getNbt().getCompound("ComplexMachinePart");
+                partNbt = stack.getNbt().getCompound(ComplexMachineEntity.MACHINE_PART_KEY);
             } catch (NullPointerException e){
                 return ActionResult.PASS;
             }
             try {
                 ComplexMachineEntity CME = (ComplexMachineEntity) world.getBlockEntity(pos);
                 assert CME != null;
-                CME.addPart(MachinePart.fromNbt(partNbt),0);
+                CME.setPart(MachinePart.fromNbt(partNbt),stack.copy() ,0);
                 world.updateListeners(pos,state,state, Block.NOTIFY_LISTENERS);
             } catch (ClassCastException e) {
                 return ActionResult.FAIL;
             }
     }
         return ActionResult.PASS;
+    }
+
+    @Override
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        ItemScatterer.onStateReplaced(state, newState, world, pos);
+        super.onStateReplaced(state, world, pos, newState, moved);
     }
 }

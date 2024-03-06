@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.tommy.somerandomstuff.SomeRandomStuff;
 import net.tommy.somerandomstuff.block.complexmachine.MachinePart;
 import net.tommy.somerandomstuff.block.complexmachine.MachinePartUpdate;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,12 +69,12 @@ public class RedstoneWireMachinePart extends MachinePart {
         if (!world.getBlockState(pos).isOf(SomeRandomStuff.COMPLEX_MACHINE)){
             return null;
         }
-        return new MachinePartUpdate(Map.of("redstone_power",power),Map.of(),direction);
+        return new MachinePartUpdate(Map.of("redstone_power",power),direction);
     }
 
     @Override
-    public MachinePartUpdate constructUpdateWithOwnData() {
-        return new MachinePartUpdate(Map.of("redstone_power",power),Map.of(),(Direction) null);
+    public @NotNull MachinePartUpdate constructUpdateWithOwnData() {
+        return new MachinePartUpdate(Map.of("redstone_power",power),(Direction) null);
     }
 
     @Override
